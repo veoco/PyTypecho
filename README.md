@@ -1,6 +1,22 @@
 # PyTypecho
 Python Typecho Client (XMLRPC)
 
+## Introduction
+
+### Install 
+```bash
+pip install pytypecho
+```
+
+### Usage
+```python
+from pytypecho import Typecho
+
+
+te = Typecho('http://127.0.0.1/index.php/action/xmlrpc', username='admin', password='admin')
+print(te.get_posts())
+```
+
 ## Status
 
 ### Functions

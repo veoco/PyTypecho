@@ -11,7 +11,7 @@ setuptools.setup(
     description="Python Typecho Client (XMLRPC)",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/veoco/pytypecho",
+    url="https://github.com/veoco/PyTypecho",
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",
