@@ -1,0 +1,11 @@
+language: python
+python:
+  - "3.6"
+  - "pypy3"
+services:
+  - docker
+before_install:
+  - docker pull veoco/typecho:latest
+  - docker run -d -p 127.0.0.1:80:4567 veoco/typecho
+  - docker ps -a
+script: pytest
