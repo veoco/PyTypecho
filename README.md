@@ -1,7 +1,10 @@
 # PyTypecho
-Python Typecho Client (XMLRPC)
+Python Typecho Client (XMLRPC).
 
 ## Introduction
+
+### Requirements
+- Python >= 3.7
 
 ### Install 
 ```bash
