@@ -1,4 +1,8 @@
 # PyTypecho
+
+[![Build Status](https://travis-ci.org/veoco/PyTypecho.svg?branch=master)](https://travis-ci.org/veoco/PyTypecho)
+[![Documentation Status](https://readthedocs.org/projects/pytypecho/badge/?version=latest)](https://pytypecho.readthedocs.io/en/latest/?badge=latest)
+
 Python Typecho Client (XMLRPC).
 
 ## Introduction
@@ -19,6 +23,9 @@ from pytypecho import Typecho
 te = Typecho('http://127.0.0.1/index.php/action/xmlrpc', username='admin', password='admin')
 print(te.get_posts())
 ```
+
+### Documents
+[ReadTheDocs](https://pytypecho.readthedocs.io/en/latest/)
 
 ## Status
 
