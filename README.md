@@ -20,6 +20,9 @@ te = Typecho('http://127.0.0.1/index.php/action/xmlrpc', username='admin', passw
 print(te.get_posts())
 ```
 
+### Documents
+[ReadTheDocs](https://pytypecho.readthedocs.io/en/latest/)
+
 ## Status
 
 ### Functions
