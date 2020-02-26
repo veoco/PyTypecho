@@ -2,7 +2,7 @@ from pytypecho import Attachment
 
 
 def test_get_attachments(te):
-    with open('resources/test.png', 'rb') as f:
+    with open('test.png', 'rb') as f:
         data = Attachment('test.png', f.read())
         te.new_attachment(data)
         r = te.get_attachments()
@@ -10,7 +10,7 @@ def test_get_attachments(te):
 
 
 def test_get_attachment(te):
-    with open('resources/test.png', 'rb') as f:
+    with open('test.png', 'rb') as f:
         data = Attachment('test.png', f.read())
         te.new_attachment(data)
         r = te.get_attachment(3)
@@ -18,7 +18,7 @@ def test_get_attachment(te):
 
 
 def test_new_attachment(te):
-    with open('resources/test.png', 'rb') as f:
+    with open('test.png', 'rb') as f:
         data = Attachment('test.png', f.read())
         r = te.new_attachment(data)
         assert r['file'] == 'test.png'
