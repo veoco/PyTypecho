@@ -46,8 +46,8 @@ print(te.get_posts())
   - [x] delete comment
 
 ### Others
-- [ ] Tests
-- [ ] Documentations
+- [x] Tests
+- [x] Documentations
 
 ## License
 PyTypecho is released under the MIT License. See LICENSE for more information.
