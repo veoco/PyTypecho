@@ -1,4 +1,8 @@
 # PyTypecho
+
+[![Build Status](https://travis-ci.org/veoco/PyTypecho.svg?branch=master)](https://travis-ci.org/veoco/PyTypecho)
+[![Documentation Status](https://readthedocs.org/projects/pytypecho/badge/?version=latest)](https://pytypecho.readthedocs.io/en/latest/?badge=latest)
+
 Python Typecho Client (XMLRPC).
 
 ## Introduction
