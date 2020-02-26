@@ -1,73 +1,73 @@
-from xmlrpc.client import ServerProxy
+from xmlrpc.client import ServerProxy, Fault
 from typing import List, Dict, Optional
+from dataclasses import asdict
 
-from .utils import try_rpc
+from .log import logger
+from .models import Post, Page, Category, Attachment, Comment
 
 
 class TypechoPostMixin:
     def get_posts(self, num: int = 10) -> Optional[List[Dict]]:
-        return try_rpc(self.s.metaWeblog.getRecentPosts, self.blog_id, self.username, self.password, num)
+        return self.try_rpc(self.s.metaWeblog.getRecentPosts, num)
 
     def get_post(self, post_id: int) -> Optional[Dict]:
-        return try_rpc(self.s.metaWeblog.getPost, post_id, self.username, self.password)
+        return self.try_rpc(self.s.metaWeblog.getPost, post_id)
 
-    def new_post(self, p_content, publish: bool) -> Optional[str]:
+    def new_post(self, post: Post, publish: bool) -> Optional[str]:
         """
-        Content's status will cover publish, and if you only save post, the post id will only be '0'
-        If content's categories are not created, it will only create the first category
+        Post's status will cover publish, and if you only save post, the post id will only be '0'
+        If Post's categories are not created, it will only create the first category
         """
-        post = p_content.as_post()
-        return try_rpc(self.s.metaWeblog.newPost, self.blog_id, self.username, self.password, post, publish)
+        return self.try_rpc(self.s.metaWeblog.newPost, post, publish)
 
-    def edit_post(self, p_content, publish: bool) -> Optional[str]:
-        return self.new_post(p_content, publish)
+    def edit_post(self, post: Post, post_id: int, publish: bool) -> Optional[str]:
+        d = asdict(post)
+        d.update({'postId': post_id})
+        return self.try_rpc(self.s.metaWeblog.newPost, d, publish)
 
     def del_post(self, post_id: int) -> None:
-        return try_rpc(self.s.blogger.deletePost, self.blog_id, post_id, self.username, self.password, True)
+        return self.try_rpc(self.s.blogger.deletePost, post_id)
 
 
 class TypechoPageMixin:
     def get_pages(self) -> Optional[List[Dict]]:
-        return try_rpc(self.s.wp.getPages, self.blog_id, self.username, self.password)
+        return self.try_rpc(self.s.wp.getPages)
 
     def get_page(self, page_id: int) -> Optional[Dict]:
-        return try_rpc(self.s.wp.getPage, self.blog_id, page_id, self.username, self.password)
-
-    def new_page(self, p_content, publish: bool) -> Optional[str]:
         """
-        Content's status will cover publish, and if you only save post, the post id will only be '0'
+        WARNING: Different from other API!
         """
-        page = p_content.as_page()
-        return try_rpc(self.s.metaWeblog.newPost, self.blog_id, self.username, self.password, page, publish)
+        return self._try_rpc(self.s.wp.getPage, self.blog_id, page_id, self.username, self.password)
 
-    def edit_page(self, p_content, publish: bool) -> Optional[str]:
-        return self.new_page(p_content, publish)
+    def new_page(self, page: Page, publish: bool) -> Optional[str]:
+        """
+        Page's status will cover publish, and if you only save post, the post id will only be '0'
+        """
+        return self.try_rpc(self.s.metaWeblog.newPost, page, publish)
+
+    def edit_page(self, page: Page, page_id: int, publish: bool) -> Optional[str]:
+        d = asdict(page)
+        d.update({'postId': page_id})
+        return self.try_rpc(self.s.metaWeblog.newPost, d, publish)
 
     def del_page(self, page_id: int) -> Optional[bool]:
-        return try_rpc(self.s.wp.deletePage, self.blog_id, self.username, self.password, page_id)
+        return self.try_rpc(self.s.wp.deletePage, page_id)
 
 
 class TypechoCategoryMixin:
     def get_categories(self) -> Optional[Dict]:
-        return try_rpc(self.s.metaWeblog.getCategories, self.blog_id, self.username, self.password)
+        return self.try_rpc(self.s.metaWeblog.getCategories)
 
-    def new_category(self, name: str, slug: str = None, parent: int = 0, description: str = None) -> Optional[str]:
-        category = {'name': name}
-        if slug:
-            category.update({'slug': slug})
-        if parent:
-            category.update({'parent': parent})
-        if description:
-            category.update({'description': description})
-        return try_rpc(self.s.wp.newCategory, self.blog_id, self.username, self.password, category)
+    def new_category(self, category: Category, parent_id: int = 0) -> Optional[str]:
+        return self.try_rpc(self.s.wp.newCategory, category)
 
     def del_category(self, category_id: int) -> Optional[bool]:
-        return try_rpc(self.s.wp.deleteCategory, self.blog_id, self.username, self.password, category_id)
+        return self.try_rpc(self.s.wp.deleteCategory, category_id)
 
 
 class TypechoTagMixin:
     def get_tags(self) -> Optional[List[Dict]]:
-        return try_rpc(self.s.wp.getTags, self.blog_id, self.username, self.password)
+        return self.try_rpc(self.s.wp.getTags)
 
 
 class TypechoAttachmentMixin:
@@ -82,17 +82,13 @@ class TypechoAttachmentMixin:
             struct.update({'number': page_size})
         if page_num:
             struct.update({'offset': page_num})
-        return try_rpc(self.s.wp.getMediaLibrary, self.blog_id, self.username, self.password, struct)
+        return self.try_rpc(self.s.wp.getMediaLibrary, struct)
 
     def get_attachment(self, attachment_id) -> Optional[Dict]:
-        return try_rpc(self.s.wp.getMediaItem, self.blog_id, self.username, self.password, attachment_id)
+        return self.try_rpc(self.s.wp.getMediaItem, attachment_id)
 
-    def new_attachment(self, file_name, file_byte):
-        data = {
-            'name': file_name,
-            'bytes': file_byte
-        }
-        return try_rpc(self.s.wp.uploadFile, self.blog_id, self.username, self.password, data)
+    def new_attachment(self, data: Attachment):
+        return self.try_rpc(self.s.wp.uploadFile, data)
 
 
 class TypechoCommentMixin:
@@ -107,43 +103,23 @@ class TypechoCommentMixin:
             struct.update({'number': page_size})
         if page_num:
             struct.update({'offset': page_num})
-        return try_rpc(self.s.wp.getComments, self.blog_id, self.username, self.password, struct)
+        return self.try_rpc(self.s.wp.getComments, struct)
 
     def get_comment(self, comment_id: int) -> Optional[Dict]:
-        return try_rpc(self.s.wp.getComment, self.blog_id, self.username, self.password, comment_id)
+        return self.try_rpc(self.s.wp.getComment, comment_id)
 
-    def new_comment(self, post_id: int, author: str, comment_content: str, author_email: str = None,
-                    author_url: str = None,
-                    comment_parent: str = None) -> None:
-        struct = {
-            'comment_author': 1,
-            'author': author,
-            'content': comment_content
-        }
-        if author_email:
-            struct.update({'comment_author_email': 1, 'author_email': author_email, })
-        if author_url:
-            struct.update({'comment_author_url': 1, 'author_url': author_url})
+    def new_comment(self, comment: Comment, post_id: int, comment_parent: str = None) -> None:
+        d = asdict(comment)
         if comment_parent:
-            struct.update({'comment_parent': comment_parent})
-        return try_rpc(self.s.wp.newComment, self.blog_id, self.username, self.password, post_id, struct)
+            d.update({'comment_parent': comment_parent})
+        path = post_id
+        return self.try_rpc(self.s.wp.newComment, path, d)
 
-    def edit_comment(self, comment_id: int, author: str, comment_content: str, author_email: str = None,
-                     status: str = None, author_url: str = None) -> Optional[bool]:
-        struct = {
-            'author': author,
-            'content': comment_content
-        }
-        if author_email:
-            struct.update({'author_email': author_email, })
-        if status:
-            struct.update({'status': status})
-        if author_url:
-            struct.update({'author_url': author_url})
-        return try_rpc(self.s.wp.editComment, self.blog_id, self.username, self.password, comment_id, struct)
+    def edit_comment(self, comment: Comment, comment_id: int) -> Optional[bool]:
+        return self.try_rpc(self.s.wp.editComment, comment_id, comment)
 
     def del_comment(self, comment_id: int) -> Optional[bool]:
-        return try_rpc(self.s.wp.deleteComment, self.blog_id, self.username, self.password, comment_id,)
+        return self.try_rpc(self.s.wp.deleteComment, comment_id, )
 
 
 class Typecho(TypechoPostMixin, TypechoPageMixin, TypechoCategoryMixin, TypechoTagMixin, TypechoAttachmentMixin,
@@ -156,3 +132,20 @@ class Typecho(TypechoPostMixin, TypechoPageMixin, TypechoCategoryMixin, TypechoT
         self.s = ServerProxy(rpc_url)
         # blog id could be any number.
         self.blog_id = 1
+
+    def try_rpc(self, rpc_method, *args, **kw):
+        return self._try_rpc(rpc_method, self.blog_id, self.username, self.password, *args, **kw)
+
+    def _try_rpc(self, rpc_method, *args, **kw):
+        res = None
+        try:
+            res = rpc_method(*args, **kw)
+            logger.info(res)
+            if res == '':
+                res = None
+        except Fault as e:
+            logger.error("Error {}: {}".format(e.faultCode, e.faultString))
+        except Exception as e:
+            logger.error("Error {}".format(e))
+        finally:
+            return res

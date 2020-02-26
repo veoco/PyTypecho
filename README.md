@@ -1,7 +1,10 @@
 # PyTypecho
-Python Typecho Client (XMLRPC)
+Python Typecho Client (XMLRPC).
 
 ## Introduction
+
+### Requirements
+- Python >= 3.7
 
 ### Install 
 ```bash
@@ -46,8 +49,8 @@ print(te.get_posts())
   - [x] delete comment
 
 ### Others
-- [ ] Tests
-- [ ] Documentations
+- [x] Tests
+- [x] Documentations
 
 ## License
 PyTypecho is released under the MIT License. See LICENSE for more information.
