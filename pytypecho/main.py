@@ -26,7 +26,7 @@ class TypechoPostMixin:
         return self.try_rpc(self.s.metaWeblog.newPost, d, publish)
 
     def del_post(self, post_id: int) -> None:
-        return self.try_rpc(self.s.blogger.deletePost, post_id)
+        return self._try_rpc(self.s.blogger.deletePost, self.blog_id, post_id, self.username, self.password, True)
 
 
 class TypechoPageMixin:
