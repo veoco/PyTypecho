@@ -1,5 +1,6 @@
 from dataclasses import dataclass, field
 from typing import List, BinaryIO
+from datetime import datetime
 
 
 @dataclass
@@ -39,7 +40,7 @@ class Content:
     mt_text_more: str = ''
     wp_password: str = ''
     mt_keywords: str = ''
-    dateCreated: str = ''
+    dateCreated: datetime = datetime.now()
     mt_allow_comments: int = 1
     mt_allow_pings: int = 1
     post_status: str = ''
