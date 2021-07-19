@@ -11,7 +11,7 @@ class TypechoPostMixin:
         return self.try_rpc(self.s.metaWeblog.getRecentPosts, num)
 
     def get_post(self, post_id: int) -> Optional[Dict]:
-        return self.try_rpc(self.s.metaWeblog.getPost, post_id)
+        return self._try_rpc(self.s.metaWeblog.getPost, post_id, self.username, self.password)
 
     def new_post(self, post: Post, publish: bool) -> Optional[str]:
         """
