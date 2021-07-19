@@ -28,7 +28,7 @@ class Content:
 
     text_more will be connected with description as description+'\n<!--more-->\n'+text_more by Typecho.
     tags should be split by ',' like 'tag1, tag2'
-    created should be timestamp.
+    dateCreated can be datetime.datetime.
     allow_feed has no effect because Typecho not use
     status could be 'publish' or 'save' or 'private'.
     """
@@ -39,7 +39,7 @@ class Content:
     mt_text_more: str = ''
     wp_password: str = ''
     mt_keywords: str = ''
-    created: str = ''
+    dateCreated: str = ''
     mt_allow_comments: int = 1
     mt_allow_pings: int = 1
     post_status: str = ''
