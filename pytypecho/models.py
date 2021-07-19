@@ -24,7 +24,7 @@ class Tag(Meta):
 @dataclass
 class Content:
     """
-    Post needs at least: title, description , category.
+    Post needs at least: title, description.
     Page needs at least: title, description.
 
     text_more will be connected with description as description+'\n<!--more-->\n'+text_more by Typecho.
