@@ -16,7 +16,7 @@ jobs:
     strategy:
       max-parallel: 4
       matrix:
-        python-version: [3.7, 3.8, 3.9, '3.10', pypy3]
+        python-version: [3.7, 3.8, 3.9]
     
     services:
       typecho:
@@ -26,7 +26,7 @@ jobs:
           TYPECHO_INSTALL: 1
           TYPECHO_SITE_URL: http://127.0.0.1
           TYPECHO_USER_NAME: typecho
-          TYPECHO_USER_PASSOWRD: testpassword
+          TYPECHO_USER_PASSWORD: testpassword
         ports:
           - 80:80
 
@@ -51,6 +51,6 @@ jobs:
       env:
         XMLRPC_URL: http://127.0.0.1/index.php/action/xmlrpc
         XMLRPC_USER_NAME: typecho
-        XMLRPC_USER_PASSOWRD: testpassword
+        XMLRPC_USER_PASSWORD: testpassword
       run: |
         pytest
