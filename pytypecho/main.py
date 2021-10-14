@@ -13,7 +13,7 @@ class TypechoPostMixin:
     def get_post(self, post_id: int) -> Optional[Dict]:
         return self._try_rpc(self.s.metaWeblog.getPost, post_id, self.username, self.password)
 
-    def new_post(self, post: Post, publish: bool) -> Optional[str]:
+    def new_post(self, post: Post, publish: bool) -> Optional[int]:
         """
         Post's status will cover publish, and if you only save post, the post id will only be '0'
         If Post's categories are not created, it will only create the first category
@@ -39,7 +39,7 @@ class TypechoPageMixin:
         """
         return self._try_rpc(self.s.wp.getPage, self.blog_id, page_id, self.username, self.password)
 
-    def new_page(self, page: Page, publish: bool) -> Optional[str]:
+    def new_page(self, page: Page, publish: bool) -> Optional[int]:
         """
         Page's status will cover publish, and if you only save post, the post id will only be '0'
         """
@@ -58,7 +58,7 @@ class TypechoCategoryMixin:
     def get_categories(self) -> Optional[Dict]:
         return self.try_rpc(self.s.metaWeblog.getCategories)
 
-    def new_category(self, category: Category, parent_id: int = 0) -> Optional[str]:
+    def new_category(self, category: Category) -> Optional[int]:
         return self.try_rpc(self.s.wp.newCategory, category)
 
     def del_category(self, category_id: int) -> Optional[bool]:

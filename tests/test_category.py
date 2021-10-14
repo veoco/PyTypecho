@@ -11,9 +11,9 @@ def test_new_category(te):
     category = Category(name='Category Name')
     r = te.new_category(category)
     assert r
-    assert r.isdigit()
+    assert isinstance(r, int)
 
 
-def del_category(te):
+def test_del_category(te):
     r = te.del_category(2)
     assert r

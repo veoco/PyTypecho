@@ -15,7 +15,7 @@ def test_new_page(te):
     page = Page(title='Page Title', description='Page Description')
     r = te.new_page(page, publish=True)
     assert r
-    assert r.isdigit()
+    assert isinstance(r, int)
 
 
 def test_edit_page(te):

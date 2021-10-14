@@ -15,7 +15,7 @@ def test_new_post(te):
     post = Post(title='Post Title', description='Post Description')
     r = te.new_post(post, publish=True)
     assert r
-    assert r.isdigit()
+    assert isinstance(r, int)
 
 
 def test_edit_post(te):
@@ -31,4 +31,4 @@ def test_del_post(te):
     post = Post(title='Del Post Title', description='Del Post Description')
     num = te.new_post(post, publish=True)
     r = te.del_post(int(num))
-    assert r is None
+    assert r
