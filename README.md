@@ -43,14 +43,14 @@ print(te.get_posts())
 - [x] Category
   - [x] get Categories
   - [x] new Category
-  - [x] delete Category(Not work)
+  - [x] delete Category
 - [x] Tag
   - [x] get Tags
 - [x] Attachment
   - [x] get attachment/attachments
   - [x] new attachment
 - [x] Comment
-  - [x] get comment(Not work)/comments
+  - [x] get comment/comments
   - [x] new comment
   - [x] edit comment
   - [x] delete comment
