@@ -20,12 +20,12 @@ class TypechoPostMixin:
         """
         return self.try_rpc(self.s.metaWeblog.newPost, post, publish)
 
-    def edit_post(self, post: Post, post_id: int, publish: bool) -> Optional[str]:
+    def edit_post(self, post: Post, post_id: int, publish: bool) -> Optional[int]:
         d = asdict(post)
         d.update({'postId': post_id})
         return self.try_rpc(self.s.metaWeblog.newPost, d, publish)
 
-    def del_post(self, post_id: int) -> None:
+    def del_post(self, post_id: int) -> Optional[bool]:
         return self._try_rpc(self.s.blogger.deletePost, self.blog_id, post_id, self.username, self.password, True)
 
 
@@ -45,7 +45,7 @@ class TypechoPageMixin:
         """
         return self.try_rpc(self.s.metaWeblog.newPost, page, publish)
 
-    def edit_page(self, page: Page, page_id: int, publish: bool) -> Optional[str]:
+    def edit_page(self, page: Page, page_id: int, publish: bool) -> Optional[int]:
         d = asdict(page)
         d.update({'postId': page_id})
         return self.try_rpc(self.s.metaWeblog.newPost, d, publish)
@@ -87,7 +87,7 @@ class TypechoAttachmentMixin:
     def get_attachment(self, attachment_id) -> Optional[Dict]:
         return self.try_rpc(self.s.wp.getMediaItem, attachment_id)
 
-    def new_attachment(self, data: Attachment):
+    def new_attachment(self, data: Attachment) -> Optional[Dict]:
         return self.try_rpc(self.s.wp.uploadFile, data)
 
 
@@ -108,7 +108,7 @@ class TypechoCommentMixin:
     def get_comment(self, comment_id: int) -> Optional[Dict]:
         return self.try_rpc(self.s.wp.getComment, comment_id)
 
-    def new_comment(self, comment: Comment, post_id: int, comment_parent: str = None) -> None:
+    def new_comment(self, comment: Comment, post_id: int, comment_parent: str = None) -> Optional[int]:
         d = asdict(comment)
         if comment_parent:
             d.update({'comment_parent': comment_parent})
