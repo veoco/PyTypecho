@@ -79,7 +79,7 @@ You should create a Post instance at first.
 
 >>> post = Post(title='Post Title', description='Post Description')
 >>> te.new_post(post, publish=True)
-'3'
+3
 
 Edit Post
 `````````
@@ -87,14 +87,14 @@ You should create a Post instance at first. And specific a post id(cid).
 
 >>> post = Post(title='Edited Post Title', description='Edited Post Description')
 >>> te.edit_post(post, post_id='3' publish=True)
-'3'
+3
 
 Delete Post
 `````````````
 A post id(cid) is required.
 
 >>> te.del_post(3)
-None
+True
 
 Page
 ------------------
@@ -167,7 +167,7 @@ You should create a Page instance at first.
 
 >>> page = Page(title='Page Title', description='Page Description')
 >>> te.new_page(page, publish=True)
-'4'
+4
 
 Edit Page
 `````````
@@ -175,7 +175,7 @@ You should create a Page instance at first. And specific a page id(cid).
 
 >>> page = Page(title='Edited Page Title', description='Edited Page Description')
 >>> te.edit_page(page, page_id=3, publish=True)
-'4'
+4
 
 Delete Page
 ````````````
@@ -208,9 +208,9 @@ You should create a Category instance at first.
 
 >>> category = Category(name='Category Name')
 >>> te.new_category(category)
-'2'
+2
 
-Delete Category (NOT WORK!)
+Delete Category
 ```````````````````````````
 A category id(mid) is required.
 
@@ -275,12 +275,25 @@ You should open a file at first.
 Comment
 ------------------
 
-Get Comment (NOT WORK!)
+Get Comment
 ````````````````````````
 A comment id is required.
 
 >>> te.get_comment(1)
-None
+{'author': 'Typecho',
+  'author_email': '',
+  'author_ip': '127.0.0.1',
+  'author_url': 'http://typecho.org',
+  'comment_id': '1',
+  'content': '欢迎加入 Typecho 大家族',
+  'date_created_gmt': <DateTime '20200131T14:10:16' at 0x23f0d1242e0>,
+  'link': 'http://192.168.50.70/index.php/archives/1/#comment-1',
+  'parent': '0',
+  'post_id': '1',
+  'post_title': '欢迎使用 Typecho',
+  'status': 'approve',
+  'type': 'comment',
+  'user_id': '0'}
 
 Get Comments
 ````````````````````````
