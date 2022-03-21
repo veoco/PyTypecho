@@ -124,12 +124,12 @@ class TypechoCommentMixin:
 
 class Typecho(TypechoPostMixin, TypechoPageMixin, TypechoCategoryMixin, TypechoTagMixin, TypechoAttachmentMixin,
               TypechoCommentMixin):
-    def __init__(self, rpc_url: str, username: str, password: str):
+    def __init__(self, rpc_url: str, username: str, password: str, debug: bool = False):
         self.rpc_url = rpc_url
         self.username = username
         self.password = password
 
-        self.s = ServerProxy(rpc_url)
+        self.s = ServerProxy(rpc_url, verbose=debug)
         # blog id could be any number.
         self.blog_id = 1
 
