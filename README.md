@@ -1,6 +1,6 @@
 # PyTypecho
 
-[![Build Status](https://travis-ci.org/veoco/PyTypecho.svg?branch=master)](https://travis-ci.org/veoco/PyTypecho)
+[![PyTypecho](https://github.com/veoco/PyTypecho/actions/workflows/python-ci.yml/badge.svg)](https://github.com/veoco/PyTypecho/actions/workflows/python-ci.yml)
 [![Documentation Status](https://readthedocs.org/projects/pytypecho/badge/?version=latest)](https://pytypecho.readthedocs.io/en/latest/?badge=latest)
 
 Python Typecho Client (XMLRPC).
@@ -24,6 +24,20 @@ te = Typecho('http://127.0.0.1/index.php/action/xmlrpc', username='admin', passw
 print(te.get_posts())
 ```
 
+or
+
+```python
+import asyncio
+from pytypecho import AsyncTypecho
+
+
+async def main():
+  te = AsyncTypecho('http://127.0.0.1/index.php/action/xmlrpc', username='admin', password='admin', semaphore=4)
+  print(await te.get_posts())
+
+asyncio.run(main())
+```
+
 ### Documents
 [ReadTheDocs](https://pytypecho.readthedocs.io/en/latest/)
 
@@ -42,7 +56,7 @@ print(te.get_posts())
   - [x] delete Page
 - [x] Category
   - [x] get Categories
-  - [x] new Category
+  - [x] new Category (Not work on typecho >= 1.2)
   - [x] delete Category
 - [x] Tag
   - [x] get Tags
