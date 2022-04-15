@@ -20,7 +20,7 @@ jobs:
     
     services:
       typecho:
-        image: joyqi/typecho:typecho:1.2.0-php8.0-apache
+        image: joyqi/typecho:1.2.0-php8.0-apache
         env:
           TYPECHO_DB_ADAPTER: Pdo_SQLite
           TYPECHO_INSTALL: 1
