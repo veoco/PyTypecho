@@ -7,8 +7,8 @@ from datetime import datetime
 class Meta:
     name: str
     parent: int = 0
-    slug: str = ''
-    description: str = ''
+    slug: str = ""
+    description: str = ""
 
 
 @dataclass
@@ -33,30 +33,31 @@ class Content:
     allow_feed has no effect because Typecho not use
     status could be 'publish' or 'save' or 'private'.
     """
+
     title: str
     description: str
 
-    slug: str = ''
-    mt_text_more: str = ''
-    wp_password: str = ''
-    mt_keywords: str = ''
+    slug: str = ""
+    mt_text_more: str = ""
+    wp_password: str = ""
+    mt_keywords: str = ""
     dateCreated: datetime = datetime.now()
     mt_allow_comments: int = 1
     mt_allow_pings: int = 1
-    post_status: str = ''
+    post_status: str = ""
 
 
 @dataclass
 class Post(Content):
-    post_type: str = 'post'
+    post_type: str = "post"
     categories: List[str] = field(default_factory=list)
 
 
 @dataclass
 class Page(Content):
-    post_type: str = 'page'
+    post_type: str = "page"
     wp_page_order: int = 0
-    wp_page_template: str = ''
+    wp_page_template: str = ""
 
 
 @dataclass
@@ -69,9 +70,9 @@ class Attachment:
 class Comment:
     content: str
 
-    author: str = ''
-    author_email: str = ''
-    author_url: str = ''
+    author: str = ""
+    author_email: str = ""
+    author_url: str = ""
 
     comment_author: int = 0
     comment_author_email: int = 0
