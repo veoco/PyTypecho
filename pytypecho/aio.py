@@ -110,6 +110,7 @@ class AsyncServerProxy:
             f"POST {self.handler} HTTP/1.1\r\n"
             f"Host: {self.host}\r\n"
             f"User-Agent: {self.user_agent}\r\n"
+            f"Connection: close\r\n"
             f"Content-Type: text/xml\r\n"
             f"Content-Length: {len(request_body)}\r\n"
             f"\r\n"
